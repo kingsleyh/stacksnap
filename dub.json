@@ -1,0 +1,14 @@
+{
+	"name": "stacksnap",
+	"authors": [
+		"Kingsley Hendrickse"
+	],
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2016, Kingsley Hendrickse",
+	"license": "proprietary" ,
+	"targetPath": "bin",
+	"targetType": "executable",
+	"dependencies": {
+      "dlangui": "~>0.8.30"
+	}
+}

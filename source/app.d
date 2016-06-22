@@ -66,6 +66,13 @@ struct ScreenshotImage
     imageWidget.drawable = imageDrawable;
     return imageWidget;
   }
+
+  ImageWidget get2(string imageFile){
+     auto imageWidget = new ImageWidget();
+    auto imageBuf = loadImage(imageFile);
+    imageWidget.draw
+    return imageWidget;
+  }
 }
 
 
@@ -98,8 +105,6 @@ extern (C) int UIAppMain(string[] args) {
        table2.colCount = 3;
        table2.padding = 10;
        table2.margins = 10;
-//       table2.backgroundColor = "black";
-
 
        table2.layoutWidth(FILL_PARENT).layoutHeight(FILL_PARENT);
 
@@ -108,17 +113,20 @@ extern (C) int UIAppMain(string[] args) {
           spacer.fontWeight = 800;
           spacer.fontFace = "Arial";
 
-       auto actualTitle = new TextWidget(null,"Actual"d);
+
+       auto actualTitle = new TextWidget(null,to!dstring("Actual " ~ cf.platform ~ " - " ~ cf.kind ~ " - " ~ cf.fileName));
           actualTitle.textColor = "#2E2E2E";
           actualTitle.fontWeight = 800;
           actualTitle.fontFace = "Arial";
+          actualTitle.fontSize = 24;
 
-       auto expectedTitle = new TextWidget(null,"Expected"d);
+       auto expectedTitle = new TextWidget(null,to!dstring("Expected " ~ cf.platform ~ " - " ~ cf.kind ~ " - " ~ cf.fileName));
           expectedTitle.textColor = "#2E2E2E";
           expectedTitle.fontWeight = 800;
           expectedTitle.fontFace = "Arial";
+          expectedTitle.fontSize = 24;
 
-         auto actualImage = ScreenshotImage().get(cf.actual);
+         auto actualImage = ScreenshotImage().get2(cf.actual);
          auto expectedImage = ScreenshotImage().get(cf.expected);
 
          actualImage.backgroundImageId("btn_default");

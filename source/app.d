@@ -7,6 +7,8 @@ import std.conv;
 import std.csv;
 import std.typecons;
 import std.range;
+import std.file;
+import std.path;
 
 mixin APP_ENTRY_POINT;
 
@@ -21,6 +23,21 @@ struct ComparedFile
 
 class Compare
 {
+
+ void processActuals2()
+ {
+    auto actualPath = "/Users/hendrkin/dev/projects/chupachupa/integration/target/screenshots/";
+    auto expectedPath = "/Users/hendrkin/dev/projects/chupachupa/integration/src/test/scala/integration/e2e/screenshots/";
+    auto actuals = filter!`endsWith(a.name,".png")`(dirEntries(actualPath,SpanMode.depth)).array;
+    auto expected = filter!`endsWith(a.name,".png")`(dirEntries(expectedPath,SpanMode.depth)).array;
+
+
+
+
+//      auto files = dirEntries("/Users/hendrkin/dev/projects/chupachupa/integration/target/screenshots/",SpanMode.depth).array;
+      writeln(actuals);
+
+ }
 
   ComparedFile[] processActuals()
   {
@@ -56,10 +73,10 @@ class Compare
 
 struct ScreenshotImage
 {
-  ImageWidget get(string imageFile){
+  ImageWidget getResize(string imageFile, int width, int height){
     auto imageWidget = new ImageWidget();
     auto imageBuf = loadImage(imageFile);
-    auto rescaledBuf = new ColorDrawBuf(900,900);
+    auto rescaledBuf = new ColorDrawBuf(width,height);
     rescaledBuf.drawRescaled(Rect(0,0,rescaledBuf.width,rescaledBuf.height), imageBuf, Rect(0,0,imageBuf.width,imageBuf.height));
     auto imageBufRef = DrawBufRef(rescaledBuf);
     auto imageDrawable = new ImageDrawable(imageBufRef);
@@ -67,11 +84,13 @@ struct ScreenshotImage
     return imageWidget;
   }
 
-  ImageWidget get2(string imageFile){
-     auto imageWidget = new ImageWidget();
+  ImageWidget get(string imageFile){
     auto imageBuf = loadImage(imageFile);
-    imageWidget.draw
-    return imageWidget;
+    auto img = Ref!DrawBuf(imageBuf);
+  	auto drawableImg = Ref!ImageDrawable(new ImageDrawable(img));
+  	auto imageWidget = new ImageWidget();
+  	imageWidget.drawable = drawableImg;
+  	return imageWidget;
   }
 }
 
@@ -96,7 +115,7 @@ extern (C) int UIAppMain(string[] args) {
      auto compare = new Compare();
 
 
-
+             compare.processActuals2();
 
      foreach(cf ; compare.processActuals){
 
@@ -126,7 +145,7 @@ extern (C) int UIAppMain(string[] args) {
           expectedTitle.fontFace = "Arial";
           expectedTitle.fontSize = 24;
 
-         auto actualImage = ScreenshotImage().get2(cf.actual);
+         auto actualImage = ScreenshotImage().get(cf.actual);
          auto expectedImage = ScreenshotImage().get(cf.expected);
 
          actualImage.backgroundImageId("btn_default");

@@ -92,13 +92,13 @@ class Compare
             spacer.fontFace = "Arial";
 
 
-         auto actualTitle = new TextWidget(null,to!dstring("Actual " ~ cf.platform ~ " - " ~ cf.kind ~ " - " ~ cf.fileName));
+         auto actualTitle = new TextWidget(null,to!dstring("Actual " ~ cf.platform ~ " - " ~ cf.kind ~ " - " ~ cf.fileName ~ " - score: " ~ cf.result));
             actualTitle.textColor = "#2E2E2E";
             actualTitle.fontWeight = 800;
             actualTitle.fontFace = "Arial";
             actualTitle.fontSize = 24;
 
-         auto expectedTitle = new TextWidget(null,to!dstring("Expected " ~ cf.platform ~ " - " ~ cf.kind ~ " - " ~ cf.fileName));
+         auto expectedTitle = new TextWidget(null,to!dstring("Expected " ~ cf.platform ~ " - " ~ cf.kind ~ " - " ~ cf.fileName ~ " - score: " ~ cf.result));
             expectedTitle.textColor = "#2E2E2E";
             expectedTitle.fontWeight = 800;
             expectedTitle.fontFace = "Arial";
